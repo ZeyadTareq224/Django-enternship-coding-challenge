@@ -1,4 +1,6 @@
 from django.db import models
+import django
+
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -9,7 +11,7 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     cover_img = models.ImageField()
-    date = models.DateField(default=timezone.now())
+    date = models.DateField(default= django.utils.timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
