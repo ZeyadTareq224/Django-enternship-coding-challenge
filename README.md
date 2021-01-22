@@ -9,3 +9,5 @@
 3- cd to EventsProject directory and install the requirements from requirements.txt file using `pip install -r requirements.txt`
 
 4- start the server `python manage.py runserver`
+
+NOTE: Python version used is `3.9.1`
