@@ -1,0 +1,92 @@
+{% extends 'events/base.html' %}
+{% block content %}
+<ul class="nav nav-tabs nav-fill mb-3" id="ex1" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link active"
+        id="ex2-tab-1"
+        data-mdb-toggle="tab"
+        href="#ex2-tabs-1"
+        role="tab"
+        aria-controls="ex2-tabs-1"
+        aria-selected="true"
+        >Upcomming Events</a
+      >
+    </li>      
+</ul>
+{% if events %}
+
+<div class="row">
+    {% for event in events %}
+    
+    <div class="container-fluid m-2">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 col">
+
+                <div class="card-group">
+                    <div class="card">
+                        <img src="{{event.cover_img.url}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{event.title}}</h5>
+                            <p>
+                                {% if event.description|length > 80 %}
+                                    {{event.description|slice:80}} ...
+                                {% else %}
+                                    {{event.description}}
+                                {% endif %}
+                            </p>
+                            <small>Event Date</small> <strong>{{event.date}}</strong>
+                            <br>
+                            <strong>{{event.get_participants_count}}</strong> <small>Participants</small>
+                            <a href="{% url 'event-details' event.id %}" class="btn btn-outline-success btn-lg btn-block">Event Details</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">posted at {{event.created_at}}</small>
+                            <strong>by {{event.owner}}</strong>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <center>
+        <div class="row">
+            <div class="card col-6">
+            </div> 
+                <div class="card col-4 ">
+                    {% if events.has_other_pages %}
+                    <ul class="pagination">
+                        {% if events.has_previous %}
+                        <li><a href="?page={{ events.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                        {% endif %}
+                        {% for i in events.paginator.page_range %}
+                        {% if events.number == i %}
+                        <li class="active"><span> {{ i }}<span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                        <li><a href="/?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if events.has_next %}
+                        <li><a href="?page={{ events.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </div>
+        </div>
+    </center>
+        
+
+  </div>
+
+{% else %}  
+    <center><h2>Currently there is no events. check again later</h2></center>
+{% endif %}
+
+
+{% endblock %}

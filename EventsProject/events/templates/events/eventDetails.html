@@ -1,0 +1,60 @@
+{% extends 'events/base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="container-fluid m-2">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 col">
+
+                <div class="card-group">
+                    <div class="card">
+                        <img src="{{event.cover_img.url}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{event.title}}</h5>
+                            <p>{{event.description}}</p>
+                            <hr>
+                                <strong>Event Start Date: {{event.date}}</strong>
+                            <hr>
+                            <a href="{% url 'events-list' %}" class="btn btn-secondary btn-lg">Back</a>
+                            {% if request.user.is_authenticated and request.user == event.owner %}
+                                <a style="float: right;" class="btn btn-primary btn-lg m-1" href="{% url 'event-update' event.id %}">Update</a>
+                                <a style="float: right;" class="btn btn-danger btn-lg m-1" href="{% url 'event-delete' event.id %}">Delete</a>
+                            {% endif %}
+                            <hr>
+
+                            {% if request.user.is_authenticated %}
+                            <center>
+
+                                <form class="col-12" method="POST" action="{% url 'event-subscribe' event.id %} " class="mb-2">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success btn-block ">Subscribe</button>
+                                </form>
+                                <br>
+                                <form method="POST" action="{% url 'event-withdrawal' event.id %} " class="mb-2">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning btn-block">Withdraw</button>
+                                </form>
+                        
+                                
+                            </center>
+                           
+                            {% endif %}
+
+                            <small style="float: right;"><strong>{{event.get_participants_count}}</strong> people are going</small>
+
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">posted at {{event.created_at}}</small>
+                            <strong>by {{event.owner}}</strong>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+        
+{% endblock %}
