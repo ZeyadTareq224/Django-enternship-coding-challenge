@@ -25,7 +25,7 @@
       <!-- Container wrapper -->
       <div class="container-fluid">
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="#">Brand</a>
+        <a class="navbar-brand">Event Management System</a>
     
         <!-- Toggle button -->
         <button
@@ -80,6 +80,7 @@
           </ul>
           <!-- Left links -->
           {% if request.user.is_authenticated %}
+          <strong class="m-1">Hello, {{request.user}}</strong>
           <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
           {% endif %}
           <!-- Search form -->
