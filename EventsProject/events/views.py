@@ -84,7 +84,7 @@ def eventCreateView(request):
 
 @login_required()
 def eventUpdateView(request, pk):
-    event = Event.objects.get(id=pk)
+    event = get_object_or_404(Event, id=pk)
     form = EventForm(instance=event)
     if request.user == event.owner:
         if request.method == "POST":
